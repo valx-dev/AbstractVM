@@ -60,8 +60,13 @@ function (AddTest)
     add_library(${Test_NAME}_src STATIC EXCLUDE_FROM_ALL ${sources_to_test})
     target_compile_options(${Test_NAME}_src PRIVATE ${COVERAGE_COMPILER_FLAGS})
 
+    set(dependencies)
+    foreach(depend ${Test_DEPENDENCIES})
+        list(APPEND dependencies "${parent_project}/${depend}.cpp")
+    endforeach()
+
     # Add test cpp file
-    add_executable(${Test_NAME} test_${Test_NAME}.cpp ${Test_DEPENDENCIES})
+    add_executable(${Test_NAME} test_${Test_NAME}.cpp ${dependencies})
 
     # Link test executable against gmock & gtest_main, sources under test
     target_link_libraries(${Test_NAME} PRIVATE ${gtest_libs} ${Test_NAME}_src)
@@ -73,4 +78,5 @@ function (AddTest)
 endfunction() # AddTest
 
 AddTest(NAME Lexer)
-#AddTest(NAME Parser)
+AddTest(NAME Parser DEPENDENCIES OpFactory CmdPop CmdAdd CmdPush CmdDump
+    CmdAssert CmdSub CmdMul CmdDiv CmdMod CmdPrint CmdExit)
