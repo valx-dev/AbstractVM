@@ -12,13 +12,13 @@
 
 #include <fstream>
 #include <iostream>
-#include "VirtualMaсhine.hpp"
+#include "VirtualMachine.hpp"
 
 int	main(int argc, char ** argv)
 {
 	(void)argc;
 	(void)argv;
-	VirtualMaсhine vm;
+	VirtualMachine vm;
 
 	if (argc == 2)
 	{

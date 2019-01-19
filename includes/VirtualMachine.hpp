@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   VirtualMaсhine.hpp                                 :+:      :+:    :+:   */
+/*   VirtualMachine.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkaidans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -22,16 +22,16 @@
 #include "Parser.hpp"
 
 
-class VirtualMaсhine
+class VirtualMachine
 {
 	std::stack<const IOperand *>		_operands;
 	
 public:
-	VirtualMaсhine();
-	VirtualMaсhine(VirtualMaсhine const &);
-	~VirtualMaсhine();
+	VirtualMachine();
+	VirtualMachine(VirtualMachine const &);
+	~VirtualMachine();
 
-	VirtualMaсhine &	operator=(VirtualMaсhine const &);
+	VirtualMachine &	operator=(VirtualMachine const &);
 
 	void	engine(std::istream &);
 };

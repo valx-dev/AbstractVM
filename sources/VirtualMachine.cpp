@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   VirtualMaсhine.cpp                                 :+:      :+:    :+:   */
+/*   VirtualMachine.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkaidans <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,18 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "VirtualMaсhine.hpp"
+#include "VirtualMachine.hpp"
 
-VirtualMaсhine::VirtualMaсhine() {}
-VirtualMaсhine::VirtualMaсhine(VirtualMaсhine const & obj)	{	*this = obj;	}
-VirtualMaсhine::~VirtualMaсhine() {}
+VirtualMachine::VirtualMachine() {}
+VirtualMachine::VirtualMachine(VirtualMachine const & obj)	{	*this = obj;	}
+VirtualMachine::~VirtualMachine() {}
 
-VirtualMaсhine &	VirtualMaсhine::operator=(VirtualMaсhine const &)
+VirtualMachine &	VirtualMachine::operator=(VirtualMachine const &)
 {
 	return *this;
 }
 
-void	VirtualMaсhine::engine(std::istream & stream)
+void	VirtualMachine::engine(std::istream & stream)
 {
 	std::string					buff;
 	Lexer						lexer;
