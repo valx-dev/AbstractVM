@@ -24,14 +24,14 @@
 
 class VirtualMachine
 {
-	std::stack<const IOperand *>		_operands;
-	
+    std::stack<const IOperand *>		_operands;
+
 public:
-	VirtualMachine();
-	VirtualMachine(VirtualMachine const &);
-	~VirtualMachine();
+    VirtualMachine();
+    VirtualMachine(VirtualMachine const &);
+    ~VirtualMachine();
 
-	VirtualMachine &	operator=(VirtualMachine const &);
+    VirtualMachine &	operator=(VirtualMachine const &);
 
-	void	engine(std::istream &);
+    void	engine(std::istream &);
 };

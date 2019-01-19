@@ -18,27 +18,27 @@ VirtualMachine::~VirtualMachine() {}
 
 VirtualMachine &	VirtualMachine::operator=(VirtualMachine const &)
 {
-	return *this;
+    return *this;
 }
 
 void	VirtualMachine::engine(std::istream & stream)
 {
-	std::string					buff;
-	Lexer						lexer;
-	Parser						parser;
-	std::vector<std::string>	vec;
-	OpFactory					factory;
+    std::string					buff;
+    Lexer						lexer;
+    Parser						parser;
+    std::vector<std::string>	vec;
+    OpFactory					factory;
 
-	while (getline(stream, buff))
-	{
-		try
-		{
-			vec = lexer.explode(buff);
-			parser.operate(vec, _operands, factory);
-		}
-		catch (std::exception & e)
-		{
-			std::cout << e.what() << std::endl;
-		}
-	}
+    while (getline(stream, buff))
+    {
+        try
+        {
+            vec = lexer.explode(buff);
+            parser.operate(vec, _operands, factory);
+        }
+        catch (std::exception & e)
+        {
+            std::cout << e.what() << std::endl;
+        }
+    }
 }

@@ -16,41 +16,41 @@
 
 int	main(int argc, char ** argv)
 {
-	(void)argc;
-	(void)argv;
-	VirtualMachine vm;
+    (void)argc;
+    (void)argv;
+    VirtualMachine vm;
 
-	if (argc == 2)
-	{
-		std::ifstream	file(argv[1]);
-		
-		if (file.is_open())
-		{
-			vm.engine(file);
-		}
-		else
-		{
-			std::cerr << "file don't exist\n";
-		}
-	}
-	else
-	{
-		vm.engine(std::cin);
-	}
+    if (argc == 2)
+    {
+        std::ifstream	file(argv[1]);
 
-	// stack stack;
+        if (file.is_open())
+        {
+            vm.engine(file);
+        }
+        else
+        {
+            std::cerr << "file don't exist\n";
+        }
+    }
+    else
+    {
+        vm.engine(std::cin);
+    }
 
-	// while (input == true)
-	// {
-	// 	if push int8 - double
-	// 		stack += add new operand
-	// 	if math
-	// 		do math
-	// 	if dump
-	// 		show_stack()
-	// 	if assert
+    // stack stack;
 
-	// }
-	system("leaks avm");
-	return (0);
+    // while (input == true)
+    // {
+    // 	if push int8 - double
+    // 		stack += add new operand
+    // 	if math
+    // 		do math
+    // 	if dump
+    // 		show_stack()
+    // 	if assert
+
+    // }
+    system("leaks avm");
+    return (0);
 }
