@@ -4,7 +4,7 @@ include(CMakeDependentOption)
 project(AbstractVM LANGUAGES CXX)
 set (CMAKE_CXX_STANDARD 14)
 
-#option(COVERAGE OFF "Generate coverage report")
+option(WITH_TESTS OFF "Build tests")
 CMAKE_DEPENDENT_OPTION(COVERAGE "Generate coverage report" ON
                 "${CMAKE_BUILD_TYPE} MATCHES Debug;${COVERAGE} MATCHES ON" OFF)
 
@@ -19,8 +19,9 @@ add_executable(${PROJECT_NAME} ${PROJECT_SRC})
 
 include_directories(includes)
 
-# Setup testing
-enable_testing()
+if (WITH_TESTS MATCHES ON)
+    # Setup testing
+    enable_testing()
 
-# TODO: add tests
-#add_subdirectory(tests)
+    add_subdirectory(tests)
+endif ()

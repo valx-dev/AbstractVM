@@ -12,32 +12,21 @@
 
 #include "Lexer.hpp"
 
-Lexer::Lexer() {}
-Lexer::Lexer(Lexer const & obj)	{	*this = obj;	}
-Lexer::~Lexer() {}
-
-std::vector<std::string>	Lexer::explode(std::string const & str)
+Lexer::words_t Lexer::explode(std::string const & str)
 {
-	std::string					buff;
-	std::vector<std::string>	vec;
+    std::string	buff;
+    words_t	vec;
 
-	for (auto n:str)
-	{
-		if (n != ' ' && n != '(' && n != ')')
-			buff += n;
-		else if ((n == ' ' || n == '(' || n == ')') && buff != "")
-		{
-			vec.push_back(buff);
-			buff = "";
-		}
-	}
-	if (buff != "")
-		vec.push_back(buff);
-
-	return vec;
-}
-
-Lexer &	Lexer::operator=(Lexer const &)
-{
-	return *this;
+    for (auto n:str) {
+        if (n != ' ' && n != '(' && n != ')') {
+            buff += n;
+        } else if ((n == ' ' || n == '(' || n == ')') && buff != "") {
+            vec.push_back(buff);
+            buff = "";
+        }
+    }
+    if (buff != "") {
+        vec.push_back(buff);
+    }
+    return vec;
 }

@@ -18,12 +18,14 @@
 class Lexer
 {
 public:
-	Lexer();
-	Lexer(Lexer const &);
-	~Lexer();
+    using words_t = std::vector<std::string>;
 
-	std::vector<std::string>	explode(std::string const &);
+    Lexer() = default;
+    Lexer(Lexer const &) = default;
+    ~Lexer() = default;
 
-	Lexer &	operator=(Lexer const &);
-	
+    words_t	explode(std::string const &);
+
+    Lexer &	operator=(Lexer const &) = default;
+
 };
