@@ -4,7 +4,7 @@ include(CMakeDependentOption)
 project(AbstractVM LANGUAGES CXX)
 set (CMAKE_CXX_STANDARD 14)
 
-option(WITH_TESTS OFF "Build tests")
+option(WITH_TESTS ON "Build tests")
 CMAKE_DEPENDENT_OPTION(COVERAGE "Generate coverage report" ON
                 "${CMAKE_BUILD_TYPE} MATCHES Debug;${COVERAGE} MATCHES ON" OFF)
 
