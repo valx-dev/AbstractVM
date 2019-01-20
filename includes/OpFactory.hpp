@@ -16,19 +16,24 @@
 
 class OpFactory
 {
-	IOperand const * createInt8(std::string const &) const;
-	IOperand const * createInt16(std::string const &) const;
-	IOperand const * createInt32(std::string const &) const;
-	IOperand const * createFloat(std::string const &) const;
-	IOperand const * createDouble(std::string const &) const;
+    IOperand const * createInt8(std::string const &) const;
+    IOperand const * createInt16(std::string const &) const;
+    IOperand const * createInt32(std::string const &) const;
+    IOperand const * createFloat(std::string const &) const;
+    IOperand const * createDouble(std::string const &) const;
+
+    static eOperandType fromString(const std::string &value);
 
 public:
-	OpFactory(void);
-	OpFactory(OpFactory const &);
-	~OpFactory();
+    OpFactory(void);
+    OpFactory(OpFactory const &);
+    ~OpFactory();
 
-	IOperand const *	createOperand(eOperandType, std::string const &) const;
+    IOperand const *createOperand(eOperandType, std::string const &) const;
+    // NOTE: overload it
+    IOperand const *createOperand(std::string const &,
+                                  std::string const &) const;
 
-	OpFactory &	operator=(OpFactory const &);
-	
+    OpFactory &	operator=(OpFactory const &);
+
 };

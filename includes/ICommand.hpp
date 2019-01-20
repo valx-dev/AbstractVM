@@ -29,6 +29,7 @@ public:
     using operations_t = std::stack<const IOperand *>;
     using args_t = std::vector<std::string>;
 
+    // TODO: the function is too generic
     virtual void execute(operations_t &, args_t &, OpFactory &) = 0;
 
     virtual ~ICommand() = default;

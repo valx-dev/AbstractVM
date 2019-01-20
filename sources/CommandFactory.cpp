@@ -22,6 +22,8 @@ public:
     {
         exit(0);
     }
+    // NOTE: usage of 'id' could be ommited in case of fromClass(__CLASS_NAME__)
+    //  will be implemented either via macro or via static calls
     static std::string id()
     {
         return "exit";
@@ -47,26 +49,10 @@ public:
 };
 
 class CmdPush : public ICommand {
-    static eOperandType	typer(std::string & stype)
-    {
-        if (stype == "int8")
-            return INT8;
-        else if (stype == "int16")
-            return INT16;
-        else if (stype == "int32")
-            return INT32;
-        else if (stype == "float")
-            return FLOAT;
-        else if (stype == "double")
-            return DOUBLE;
-        else
-            return DOUBLE;
-    };
-
 public:
     void execute(operations_t &stack, args_t &args, OpFactory &factory) override
     {
-        stack.push(factory.createOperand(typer(args.at(1)), args.at(2)));
+        stack.push(factory.createOperand(args.at(1), args.at(2)));
     }
     static std::string id()
     {

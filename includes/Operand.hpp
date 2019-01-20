@@ -12,133 +12,96 @@
 
 #pragma once
 
+#include <functional>
+
 #include "IOperand.hpp"
 #include "OpFactory.hpp"
 
 template<typename T>
 class Operand : public IOperand
 {
-	T					_oper;
-	eOperandType		_type;
-	const OpFactory *	_factory;
-	std::string			_str;
+    T					_oper;
+    eOperandType		_type;
+    const OpFactory *	_factory;
+    std::string			_str;
+
+    IOperand const *apply(IOperand const &obj,
+                          std::function<double(double, double)> fn) const
+    {
+        const auto &type = getPrecision() > obj.getPrecision()
+                ? getType() : obj.getType();
+
+        const auto &result = fn(std::stod(toString()),
+                                std::stod(obj.toString()));
+        return _factory->createOperand(type, std::to_string(result));
+    }
 
 public:
-	Operand() : _oper(0), _type(INT8), _factory(NULL)
-	{
-		_str = std::to_string(_oper);
-	}
-	Operand(T val, eOperandType type, const OpFactory * factory) : _oper(val), _type(type),  _factory(factory)
-	{
-		std::cout << "got new val: " << val << std::endl;
-		_str = std::to_string(val);
-	}
-	Operand(Operand const & obj)	{	*this = obj;	}
-	~Operand() {};
+    Operand() : Operand(0, INT8, nullptr) {}
+    Operand(T val, eOperandType type, const OpFactory * factory)
+        : _oper(val), _type(type),  _factory(factory)
+    {
+        std::cout << "got new val: " << val << std::endl;
+        _str = std::to_string(val);
+    }
+    Operand(Operand const & obj)	{	*this = obj;	}
+    ~Operand() {};
 
-	IOperand const *	operator+(IOperand const & obj) const
-	{
-		if (this->getPrecision() > obj.getPrecision())
-		{
-			return _factory->createOperand(this->getType(),
-				std::to_string(std::stod(this->toString()) + std::stod(obj.toString())));
-		}
-		else
-		{
-			return _factory->createOperand(obj.getType(),
-				std::to_string(std::stod(this->toString()) + std::stod(obj.toString())));
-		}
-	}
+    IOperand const *	operator+(IOperand const & obj) const
+    {
+        return apply(obj, [](auto first, auto second) {
+                                return first + second;
+                            });
+    }
 
-	IOperand const *	operator-(IOperand const & obj) const
-	{
-		if (this->getPrecision() > obj.getPrecision())
-		{
-			return _factory->createOperand(this->getType(),
-				std::to_string(std::stod(this->toString()) - std::stod(obj.toString())));
-		}
-		else
-		{
-			return _factory->createOperand(obj.getType(),
-				std::to_string(std::stod(this->toString()) - std::stod(obj.toString())));
-		}
-	}
+    IOperand const *	operator-(IOperand const & obj) const
+    {
+        return apply(obj, [](auto first, auto second) {
+                                return first - second;
+                            });
+    }
 
-	IOperand const *	operator*(IOperand const & obj) const
-	{
-		if (this->getPrecision() > obj.getPrecision())
-		{
-			return _factory->createOperand(this->getType(),
-				std::to_string(std::stod(this->toString()) * std::stod(obj.toString())));
-		}
-		else
-		{
-			return _factory->createOperand(obj.getType(),
-				std::to_string(std::stod(this->toString()) * std::stod(obj.toString())));
-		}
-	}
+    IOperand const *	operator*(IOperand const & obj) const
+    {
+        return apply(obj, [](auto first, auto second) {
+                                return first * second;
+                            });
+    }
 
-	IOperand const *	operator/(IOperand const & obj) const
-	{
-		if (this->getPrecision() > obj.getPrecision())
-		{
-			return _factory->createOperand(this->getType(),
-				std::to_string(std::stod(this->toString()) / std::stod(obj.toString())));
-		}
-		else
-		{
-			return _factory->createOperand(obj.getType(),
-				std::to_string(std::stod(this->toString()) / std::stod(obj.toString())));
-		}
-	}
+    IOperand const *	operator/(IOperand const & obj) const
+    {
+        return apply(obj, [](auto first, auto second) {
+                                return first / second;
+                            });
+    }
 
-	IOperand const *	operator%(IOperand const & obj) const
-	{
-		if (obj.getType() > INT32)
-			throw FloatPointException();
-		if (this->getPrecision() > obj.getPrecision())
-		{
-			return _factory->createOperand(this->getType(),
-				std::to_string(std::stoi(this->toString()) % std::stoi(obj.toString())));
-		}
-		else
-		{
-			return _factory->createOperand(obj.getType(),
-				std::to_string(std::stoi(this->toString()) % std::stoi(obj.toString())));
-		}
-	}
+    IOperand const *	operator%(IOperand const & obj) const
+    {
+        // TODO: change function param types?
+        return apply(obj, [](auto first, auto second) {
+                                return int(first) % int(second);
+                            });
+    }
 
-	int	getPrecision() const
-	{
-		return _type;
-	}
+    int	getPrecision() const
+    {
+        return _type;
+    }
 
-	eOperandType	getType() const
-	{
-		return _type;
-	}
+    eOperandType	getType() const
+    {
+        return _type;
+    }
 
-	std::string const &	toString() const
-	{
-		return _str;
-	}
+    std::string const &	toString() const
+    {
+        return _str;
+    }
 
-	class FloatPointException
-	{
-	public:
-		FloatPointException() throw() {}
-		FloatPointException(FloatPointException const & obj) throw()
-		{
-			*this = obj;
-		}
-		virtual ~FloatPointException() throw() {}
-		virtual const char*	what() const throw()
-		{
-			return "Floating point exception.";
-		}
-		FloatPointException &	operator=(FloatPointException const &) throw()
-		{
-			return *this;
-		}
-	};
+    struct FloatPointException : public std::runtime_error
+    {
+        FloatPointException()
+            : std::runtime_error("Floating point exception.")
+        {}
+    };
 };
