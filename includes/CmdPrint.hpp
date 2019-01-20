@@ -17,31 +17,36 @@
 class CmdPrint : public ICommand
 {
 public:
-	CmdPrint();
-	CmdPrint(CmdPrint const &);
-	~CmdPrint();
+    CmdPrint();
+    CmdPrint(CmdPrint const &);
+    ~CmdPrint();
 
-	CmdPrint &	operator=(CmdPrint const &);
+    CmdPrint &	operator=(CmdPrint const &);
 
-	void	execute(std::stack<const IOperand *> &, std::vector<std::string> &, OpFactory &);
+    void	execute(std::stack<const IOperand *> &, std::vector<std::string> &, OpFactory &);
 
-	class EmptyStackException
-	{
-	public:
-		EmptyStackException() throw();
-		EmptyStackException(EmptyStackException const &) throw();
-		virtual ~EmptyStackException() throw();
-		virtual const char*	what() const throw();
-		EmptyStackException &	operator=(EmptyStackException const &) throw();
-	};
+    static std::string id()
+    {
+        return "print";
+    }
 
-	class WrongTypeException
-	{
-	public:
-		WrongTypeException() throw();
-		WrongTypeException(WrongTypeException const &) throw();
-		virtual ~WrongTypeException() throw();
-		virtual const char*	what() const throw();
-		WrongTypeException &	operator=(WrongTypeException const &) throw();
-	};
+    class EmptyStackException
+    {
+    public:
+        EmptyStackException() throw();
+        EmptyStackException(EmptyStackException const &) throw();
+        virtual ~EmptyStackException() throw();
+        virtual const char*	what() const throw();
+        EmptyStackException &	operator=(EmptyStackException const &) throw();
+    };
+
+    class WrongTypeException
+    {
+    public:
+        WrongTypeException() throw();
+        WrongTypeException(WrongTypeException const &) throw();
+        virtual ~WrongTypeException() throw();
+        virtual const char*	what() const throw();
+        WrongTypeException &	operator=(WrongTypeException const &) throw();
+    };
 };

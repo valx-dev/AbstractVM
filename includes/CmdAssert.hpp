@@ -17,31 +17,36 @@
 class CmdAssert : public ICommand
 {
 public:
-	CmdAssert();
-	CmdAssert(CmdAssert const &);
-	~CmdAssert();
+    CmdAssert();
+    CmdAssert(CmdAssert const &);
+    ~CmdAssert();
 
-	CmdAssert &	operator=(CmdAssert const &);
+    CmdAssert &	operator=(CmdAssert const &);
 
-	void	execute(std::stack<const IOperand *> &, std::vector<std::string> &, OpFactory &);
+    void	execute(std::stack<const IOperand *> &, std::vector<std::string> &, OpFactory &);
 
-	class EmptyStackException
-	{
-	public:
-		EmptyStackException() throw();
-		EmptyStackException(EmptyStackException const &) throw();
-		virtual ~EmptyStackException() throw();
-		virtual const char*	what() const throw();
-		EmptyStackException &	operator=(EmptyStackException const &) throw();
-	};
+    static std::string id()
+    {
+        return "assert";
+    }
 
-	class NonEqualException
-	{
-	public:
-		NonEqualException() throw();
-		NonEqualException(NonEqualException const &) throw();
-		virtual ~NonEqualException() throw();
-		virtual const char*	what() const throw();
-		NonEqualException &	operator=(NonEqualException const &) throw();
-	};
+    class EmptyStackException
+    {
+    public:
+        EmptyStackException() throw();
+        EmptyStackException(EmptyStackException const &) throw();
+        virtual ~EmptyStackException() throw();
+        virtual const char*	what() const throw();
+        EmptyStackException &	operator=(EmptyStackException const &) throw();
+    };
+
+    class NonEqualException
+    {
+    public:
+        NonEqualException() throw();
+        NonEqualException(NonEqualException const &) throw();
+        virtual ~NonEqualException() throw();
+        virtual const char*	what() const throw();
+        NonEqualException &	operator=(NonEqualException const &) throw();
+    };
 };

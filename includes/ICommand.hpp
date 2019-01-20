@@ -15,6 +15,8 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <memory>
+
 #include "IOperand.hpp"
 #include "Operand.hpp"
 #include "OpFactory.hpp"
@@ -22,7 +24,12 @@
 class ICommand
 {
 public:
-	virtual void	execute(std::stack<const IOperand *> &, std::vector<std::string> &, OpFactory &) = 0;
+    using Ptr = std::shared_ptr<ICommand>;
 
-	virtual ~ICommand() {};	
+    using operations_t = std::stack<const IOperand *>;
+    using args_t = std::vector<std::string>;
+
+    virtual void execute(operations_t &, args_t &, OpFactory &) = 0;
+
+    virtual ~ICommand() = default;
 };

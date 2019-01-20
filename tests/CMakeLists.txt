@@ -78,5 +78,7 @@ function (AddTest)
 endfunction() # AddTest
 
 AddTest(NAME Lexer)
-AddTest(NAME Parser DEPENDENCIES OpFactory CmdPop CmdAdd CmdPush CmdDump
-    CmdAssert CmdSub CmdMul CmdDiv CmdMod CmdPrint CmdExit)
+AddTest(NAME Parser DEPENDENCIES OpFactory CommandFactory
+    CmdPop CmdAssert CmdMod CmdPrint)
+AddTest(NAME CommandFactory DEPENDENCIES OpFactory
+    CmdPop CmdAssert CmdMod CmdPrint)

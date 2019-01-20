@@ -12,40 +12,23 @@
 
 #include "Parser.hpp"
 
-Parser::Parser()
-{
-	_commands["push"] = new CmdPush;
-	_commands["pop"] = new CmdPop;
-	_commands["dump"] = new CmdDump;
-	_commands["assert"] = new CmdAssert;
-	_commands["add"] = new CmdAdd;
-	_commands["sub"] = new CmdSub;
-	_commands["mul"] = new CmdMul;
-	_commands["div"] = new CmdDiv;
-	_commands["mod"] = new CmdMod;
-	_commands["print"] = new CmdPrint;
-	_commands["exit"] = new CmdExit;
-}
-Parser::Parser(Parser const &) {}
-Parser::~Parser()
-{
-	for (std::map<std::string, ICommand *>::iterator it = _commands.begin(); it != _commands.end(); it++)
-		delete it->second;
-}
+#include "CommandFactory.hpp"
 
-Parser &	Parser::operator=(Parser const &)
+void Parser::operate(std::vector<std::string> & vec,
+                     std::stack<const IOperand *> & operands,
+                     OpFactory & factory)
 {
-	return *this;
-}
 
-void	Parser::operate(std::vector<std::string> & vec, std::stack<const IOperand *> & operands, OpFactory & factory)
-{
-	try
-	{
-		_commands.at(vec.at(0))->execute(operands, vec, factory);
-	}
-	catch (std::exception & e)
-	{
-		std::cout << e.what() << std::endl;
-	}
+    try
+    {
+        const CmdFactory::commands_t cmds = CmdFactory().create(vec);
+
+        for (const auto &cmd : cmds) {
+            cmd->execute(operands, vec, factory);
+        }
+    }
+    catch (std::exception & e)
+    {
+        std::cout << e.what() << std::endl;
+    }
 }
